@@ -6,3 +6,5 @@ func unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("jump"):
 		exiting.emit("jumping")
+
+		return

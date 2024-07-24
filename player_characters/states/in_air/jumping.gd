@@ -18,3 +18,5 @@ func physics_process(delta: float) -> void:
 
 	if _player_character.get_real_velocity().y < 0.0:
 		exiting.emit("falling")
+
+		return

@@ -10,4 +10,13 @@ func physics_process(delta: float) -> void:
 		if _player_character.get_real_velocity().is_zero_approx():
 			exiting.emit("idle")
 
-		exiting.emit("moving")
+			return
+
+		if Input.is_action_pressed("sprint"):
+			exiting.emit("sprinting")
+
+			return
+
+		exiting.emit("running")
+
+		return

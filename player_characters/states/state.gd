@@ -13,5 +13,4 @@ func unhandled_input(event: InputEvent) -> void:
 
 
 func physics_process(delta: float) -> void:
-	_player_character.handle_movement_input()
 	_player_character.move(delta)

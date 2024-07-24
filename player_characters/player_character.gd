@@ -2,13 +2,15 @@ class_name PlayerCharacter
 extends CharacterBody3D
 
 
-const MAX_MOVEMENT_SPEED: float = 4.0
+const MAX_RUNNING_SPEED: float = 4.0
+const MAX_SPRINT_SPEED: float = 8.0
 const MOVEMENT_ACCELERATION: float = 16.0
 const MAX_JUMP_HEIGHT: float = 1.0
 const MOUSE_SENSITIVITY := Vector2(0.2, 0.2)
 
 var _state_machine: StateMachine
 var _input_movement_vector: Vector2
+var _max_movement_speed: float
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var _max_jump_speed: float = sqrt(2 * _gravity * MAX_JUMP_HEIGHT)
 
@@ -20,7 +22,8 @@ func _init() -> void:
 		preload("res://player_characters/states/in_air/falling.gd").new(self),
 		preload("res://player_characters/states/in_air/jumping.gd").new(self),
 		preload("res://player_characters/states/on_floor/idle.gd").new(self),
-		preload("res://player_characters/states/on_floor/moving.gd").new(self),
+		preload("res://player_characters/states/on_floor/moving/running.gd").new(self),
+		preload("res://player_characters/states/on_floor/moving/sprinting.gd").new(self),
 	]
 	_state_machine = StateMachine.new(states, "idle")
 
@@ -36,8 +39,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	_state_machine.physics_process(delta)
 
-	DebugMenu.set_info_value("player_character/speed", get_real_velocity().length())
-
 
 func look(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -51,10 +52,6 @@ func look(event: InputEvent) -> void:
 		_head.set_rotation_degrees(head_rotation_degrees)
 
 
-func handle_movement_input() -> void:
-	_input_movement_vector = Input.get_vector("move_left","move_right", "move_forward", "move_back")
-
-
 func apply_jump_velocity() -> void:
 	velocity.y = _max_jump_speed
 
@@ -64,10 +61,12 @@ func apply_falling_velocity(delta: float) -> void:
 
 
 func move(delta: float) -> void:
+	_input_movement_vector = Input.get_vector("move_left","move_right", "move_forward", "move_back")
+
 	var target_movement_velocity: Vector3
 	target_movement_velocity = _head.get_global_basis() * Vector3(_input_movement_vector.x, 0.0, _input_movement_vector.y)
 	target_movement_velocity.y = 0.0
-	target_movement_velocity = target_movement_velocity.normalized() * MAX_MOVEMENT_SPEED
+	target_movement_velocity = target_movement_velocity.normalized() * _max_movement_speed
 
 	var horizontal_velocity: Vector3 = velocity
 	horizontal_velocity.y = 0.0
@@ -79,9 +78,15 @@ func move(delta: float) -> void:
 
 	move_and_slide()
 
+	DebugMenu.set_info_value("player_character/horizontal_speed", horizontal_velocity.length())
+
 
 func get_input_movement_vector() -> Vector2:
 	return _input_movement_vector
+
+
+func set_max_movement_speed(value: float) -> void:
+	_max_movement_speed = value
 
 
 func _on_state_machine_current_state_changed(current_state_name: String) -> void:
