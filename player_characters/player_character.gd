@@ -4,6 +4,7 @@ extends CharacterBody3D
 
 const MAX_MOVEMENT_SPEED: float = 4.0
 const MOVEMENT_ACCELERATION: float = 16.0
+const MOUSE_SENSITIVITY := Vector2(0.2, 0.2)
 
 var _state_machine: StateMachine
 var _input_movement_vector: Vector2
@@ -31,6 +32,18 @@ func _physics_process(delta: float) -> void:
 	_state_machine.physics_process(delta)
 
 	DebugMenu.set_info_value("player_character/speed", get_real_velocity().length())
+
+
+func look(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		var mouse_relative_position: Vector2 = (event as InputEventMouseMotion).get_relative()
+
+		rotate_y(-deg_to_rad(mouse_relative_position.x * MOUSE_SENSITIVITY.x))
+		_head.rotate_x(-deg_to_rad(mouse_relative_position.y * MOUSE_SENSITIVITY.y))
+
+		var head_rotation_degrees = _head.get_rotation_degrees()
+		head_rotation_degrees.x = clamp(head_rotation_degrees.x, -89.9, 89.9)
+		_head.set_rotation_degrees(head_rotation_degrees)
 
 
 func handle_movement_input() -> void:
