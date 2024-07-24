@@ -1,1 +1,1 @@
-# godot-fps-template
+# Godot FPS Template
