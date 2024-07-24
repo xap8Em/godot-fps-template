@@ -1,14 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://b552anikf6kgs"]
+[gd_scene load_steps=5 format=3 uid="uid://b552anikf6kgs"]
 
 [ext_resource type="PackedScene" uid="uid://b7ta1yd7ublh6" path="res://levels/level.tscn" id="1_1vrec"]
 [ext_resource type="Script" path="res://levels/debug_room/debug_room.gd" id="2_0b07o"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_hecvt"]
 
+[sub_resource type="QuadMesh" id="QuadMesh_5ivoa"]
+size = Vector2(20, 20)
+orientation = 1
+
 [node name="DebugRoom" instance=ExtResource("1_1vrec")]
 script = ExtResource("2_0b07o")
+metadata/_edit_group_ = true
 
 [node name="Ground" type="StaticBody3D" parent="." index="0"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" index="0"]
 shape = SubResource("WorldBoundaryShape3D_hecvt")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" index="1"]
+mesh = SubResource("QuadMesh_5ivoa")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true

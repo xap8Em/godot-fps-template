@@ -4,3 +4,4 @@
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_g1rxt")
+metadata/_edit_lock_ = true
