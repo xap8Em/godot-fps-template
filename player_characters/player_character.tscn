@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://b50fyxwe8dm4t"]
+
+[ext_resource type="Script" path="res://player_characters/player_character.gd" id="1_djh15"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fuauk"]
+radius = 0.2
+height = 1.6
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+script = ExtResource("1_djh15")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_fuauk")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Eyes" type="Node3D" parent="Head"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
