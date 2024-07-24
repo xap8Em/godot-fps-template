@@ -10,3 +10,8 @@ func _init(player_character: PlayerCharacter) -> void:
 
 func unhandled_input(event: InputEvent) -> void:
 	_player_character.look(event)
+
+
+func physics_process(delta: float) -> void:
+	_player_character.handle_movement_input()
+	_player_character.move(delta)

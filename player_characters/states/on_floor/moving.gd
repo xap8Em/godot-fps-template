@@ -1,4 +1,4 @@
-extends "res://player_characters/states/state.gd"
+extends "res://player_characters/states/on_floor/on_floor.gd"
 
 
 func _init(player_character: PlayerCharacter) -> void:
@@ -9,9 +9,6 @@ func _init(player_character: PlayerCharacter) -> void:
 
 func physics_process(delta: float) -> void:
 	super(delta)
-
-	_player_character.handle_movement_input()
-	_player_character.move(delta)
 
 	if (
 		_player_character.get_real_velocity().is_zero_approx()

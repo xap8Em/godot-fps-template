@@ -1,4 +1,4 @@
-extends "res://player_characters/states/state.gd"
+extends "res://player_characters/states/on_floor/on_floor.gd"
 
 
 func _init(player_character: PlayerCharacter) -> void:
@@ -7,10 +7,8 @@ func _init(player_character: PlayerCharacter) -> void:
 	_name = "idle"
 
 
-func unhandled_input(event: InputEvent) -> void:
-	super(event)
-
-	_player_character.handle_movement_input()
+func physics_process(delta: float) -> void:
+	super(delta)
 
 	if not _player_character.get_input_movement_vector().is_zero_approx():
 		exiting.emit("moving")
