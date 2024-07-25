@@ -1,7 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7ta1yd7ublh6"]
+[gd_scene load_steps=5 format=3 uid="uid://b7ta1yd7ublh6"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_g1rxt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fhuyy"]
+
+[sub_resource type="Sky" id="Sky_sxl5f"]
+sky_material = SubResource("ProceduralSkyMaterial_fhuyy")
+
+[sub_resource type="Environment" id="Environment_kbncg"]
+background_mode = 2
+sky = SubResource("Sky_sxl5f")
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_g1rxt")
 metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kbncg")
