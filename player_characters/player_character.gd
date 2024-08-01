@@ -6,13 +6,11 @@ const MAX_RUNNING_SPEED: float = 4.0
 const MAX_SPRINT_SPEED: float = 8.0
 const MOVEMENT_ACCELERATION: float = 16.0
 const MAX_JUMP_HEIGHT: float = 1.0
-const MOUSE_SENSITIVITY := Vector2(0.2, 0.2)
 
 var _state_machine: StateMachine
 var _input_movement_vector: Vector2
 var _max_movement_speed: float
-var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
-var _max_jump_speed: float = sqrt(2 * _gravity * MAX_JUMP_HEIGHT)
+var _max_jump_speed: float = sqrt(2 * Globals.get_gravity() * MAX_JUMP_HEIGHT)
 
 @onready var _head := $Head as Node3D
 
@@ -44,8 +42,8 @@ func look(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var mouse_relative_position: Vector2 = (event as InputEventMouseMotion).get_relative()
 
-		rotate_y(-deg_to_rad(mouse_relative_position.x * MOUSE_SENSITIVITY.x))
-		_head.rotate_x(-deg_to_rad(mouse_relative_position.y * MOUSE_SENSITIVITY.y))
+		rotate_y(-deg_to_rad(mouse_relative_position.x * Settings.get_mouse_sensitivity().x))
+		_head.rotate_x(-deg_to_rad(mouse_relative_position.y * Settings.get_mouse_sensitivity().y))
 
 		var head_rotation_degrees = _head.get_rotation_degrees()
 		head_rotation_degrees.x = clamp(head_rotation_degrees.x, -89.9, 89.9)
@@ -57,7 +55,7 @@ func apply_jump_velocity() -> void:
 
 
 func apply_falling_velocity(delta: float) -> void:
-	velocity.y -= _gravity * delta
+	velocity.y -= Globals.get_gravity() * delta
 
 
 func move(delta: float) -> void:
