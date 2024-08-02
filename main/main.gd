@@ -15,4 +15,5 @@ func _input(event: InputEvent) -> void:
 
 func _toggle_window_mode() -> void:
 	_window_mode_is_fullscreen = not _window_mode_is_fullscreen
+
 	DisplayServer.window_set_mode(3 * int(_window_mode_is_fullscreen))

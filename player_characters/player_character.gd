@@ -6,6 +6,7 @@ const MAX_RUNNING_SPEED: float = 4.0
 const MAX_SPRINT_SPEED: float = 8.0
 const MOVEMENT_ACCELERATION: float = 16.0
 const MAX_JUMP_HEIGHT: float = 1.0
+const PROJECTILE_SCENE: PackedScene = preload("res://projectiles/projectile.tscn")
 
 var _state_machine: StateMachine
 var _input_movement_vector: Vector2
@@ -77,6 +78,15 @@ func move(delta: float) -> void:
 	move_and_slide()
 
 	DebugMenu.set_info_value("player_character/horizontal_speed", horizontal_velocity.length())
+
+
+func fire_weapon(event: InputEvent) -> void:
+	if event.is_action_pressed("fire_weapon"):
+		var projectile: Projectile = PROJECTILE_SCENE.instantiate()
+
+		get_parent().add_child(projectile)
+
+		projectile.launch(_head.get_global_position(), (-_head.get_global_basis().z).normalized())
 
 
 func get_input_movement_vector() -> Vector2:

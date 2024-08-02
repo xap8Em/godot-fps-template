@@ -11,6 +11,8 @@ func _init(player_character: PlayerCharacter) -> void:
 func unhandled_input(event: InputEvent) -> void:
 	_player_character.look(event)
 
+	_player_character.fire_weapon(event)
+
 
 func physics_process(delta: float) -> void:
 	_player_character.move(delta)
