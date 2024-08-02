@@ -28,8 +28,6 @@ func _init() -> void:
 
 	_state_machine.current_state_changed.connect(_on_state_machine_current_state_changed)
 
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	_state_machine.unhandled_input(event)
@@ -40,7 +38,10 @@ func _physics_process(delta: float) -> void:
 
 
 func look(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if (
+		event is InputEventMouseMotion
+		and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	):
 		var mouse_relative_position: Vector2 = (event as InputEventMouseMotion).get_relative()
 
 		rotate_y(-deg_to_rad(mouse_relative_position.x * Settings.get_mouse_sensitivity().x))
