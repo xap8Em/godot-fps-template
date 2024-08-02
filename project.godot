@@ -25,11 +25,6 @@ DebugMenu="*res://debug_menu/debug_menu.tscn"
 window/size/mode=3
 window/stretch/mode="viewport"
 
-[editor]
-
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
-
 [input]
 
 move_left={
